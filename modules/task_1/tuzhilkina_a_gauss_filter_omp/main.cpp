@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <omp.h>
+#include <math.h>
 #include <iostream>
 
 void InitMatr(int rows, int cols, int** m) {
