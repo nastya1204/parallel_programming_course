@@ -1,8 +1,8 @@
+// Copyright 2019 Tuzhilkina Anastasia
+
 #include <stdio.h>
 #include <omp.h>
 #include <iostream>
-
-using namespace std;
 
 void InitMatr(int rows, int cols, int** m) {
   for (int i = 0; i < rows; i++)
@@ -70,7 +70,7 @@ int main() {
   st = omp_get_wtime();
   Gauss_seq(rows, cols, kernel, picture, res_seq);
   end = omp_get_wtime();
-  cout << "Time seq:" << end - st << std::endl;
+  std::cout << "Time seq:" << end - st << std::endl;
 
   system("pause");
 
@@ -84,3 +84,5 @@ int main() {
 
   return 0;
 }
+
+
