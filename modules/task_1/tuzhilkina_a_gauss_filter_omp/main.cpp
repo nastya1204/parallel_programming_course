@@ -4,17 +4,17 @@
 
 using namespace std;
 
-void InitMatr(int rows, int cols, int** m){
+void InitMatr(int rows, int cols, int** m) {
   for (int i = 0; i < rows; i++)
     for (int j = 0; j < cols; j++)
       m[i][j] = static_cast<int>(std::rand() % 255);
 }
 
-void InitKern(double kernel[3][3], int radius, double sigma){
+void InitKern(double kernel[3][3], int radius, double sigma) {
   double norm = 0;
 
   for (int i = -radius; i <= radius; i++)
-    for (int j = -radius; j <= radius; j++)    {
+    for (int j = -radius; j <= radius; j++) {
       kernel[i + radius][j + radius] = (exp(-(i * i + j * j) / (2 * sigma * sigma)));
       norm += kernel[i + radius][j + radius];
     }
@@ -24,7 +24,7 @@ void InitKern(double kernel[3][3], int radius, double sigma){
       kernel[i][j] /= norm;
 }
 
-inline int Clamp(int value, int min, int max){
+inline int Clamp(int value, int min, int max) {
   if (value < min)
     return min;
 
@@ -34,13 +34,13 @@ inline int Clamp(int value, int min, int max){
   return value;
 }
 
-void Gauss_seq(int rows, int cols, double kernel[3][3], int **picture1, int **picture2){
+void Gauss_seq(int rows, int cols, double kernel[3][3], int **picture1, int **picture2) {
   double temp;
   for (int j = 0; j < cols; j++)
-    for (int i = 0; i < rows; i++){
+    for (int i = 0; i < rows; i++) {
       temp = 0.0;
       for (int q = -1; q <= 1; q++)
-        for (int l = -1; l <= 1; l++){
+        for (int l = -1; l <= 1; l++) {
           int idX = Clamp(i + q, 0, rows - 1);
           int idY = Clamp(j + l, 0, cols - 1);
           temp += picture1[idX][idY] * kernel[q + 1][l + 1];
@@ -49,7 +49,7 @@ void Gauss_seq(int rows, int cols, double kernel[3][3], int **picture1, int **pi
     }
 }
 
-int main(){
+int main() {
   int rows, cols;
   double st, end;
   double kernel[3][3];
@@ -59,7 +59,7 @@ int main(){
   int** picture = new int*[rows];
   int** res_seq = new int*[rows];
 
-  for (int i = 0; i < rows; i++){
+  for (int i = 0; i < rows; i++) {
     picture[i] = new int[cols];
     res_seq[i] = new int[cols];
   }
@@ -74,7 +74,7 @@ int main(){
 
   system("pause");
 
-  for (int i = 0; i < rows; i++){
+  for (int i = 0; i < rows; i++) {
     delete[] picture[i];
     delete[] res_seq[i];
   }
