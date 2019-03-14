@@ -1,5 +1,6 @@
 // Copyright 2019 Tuzhilkina Anastasia
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <omp.h>
 #include <math.h>
@@ -72,8 +73,6 @@ int main() {
   Gauss_seq(rows, cols, kernel, picture, res_seq);
   end = omp_get_wtime();
   std::cout << "Time seq:" << end - st << std::endl;
-
-  system("pause");
 
   for (int i = 0; i < rows; i++) {
     delete[] picture[i];
