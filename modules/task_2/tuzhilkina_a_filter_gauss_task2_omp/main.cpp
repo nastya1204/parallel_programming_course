@@ -38,13 +38,13 @@ inline int Clamp(int value, int min, int max) {
 }
 
 void Gauss_par(int rows, int cols, double kernel[3][3], int **picture1, int **picture2) {
-    double temp;
+    
     omp_set_num_threads(2);
 
 #pragma omp parallel for firstprivate(temp)
     for (int j = 0; j < cols; j++)
         for (int i = 0; i < rows; i++) {
-            temp = 0.0;
+            double temp = 0.0;
             for (int q = -1; q <= 1; q++)
                 for (int l = -1; l <= 1; l++) {
                     int idX = Clamp(i + q, 0, rows - 1);
