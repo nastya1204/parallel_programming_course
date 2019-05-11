@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <omp.h>
 #include <math.h>
 #include <iostream>
 #include "tbb/parallel_for.h"
@@ -64,7 +63,6 @@ void parallel_matrix_multiply(double kernel[3][3], int **picture1, int **picture
 
 int main() {
     int rows, cols;
-    double st, end;
     double kernel[3][3];
 
     rows = 5000, cols = 5000;
@@ -80,11 +78,12 @@ int main() {
     InitMatr(rows, cols, picture);
     InitKern(kernel, 1, 1.0);
 
-    st = omp_get_wtime();
+    const clock_t startTimeParallel = clock();
     tbb::task_scheduler_init init(4);
     parallel_matrix_multiply(kernel, picture, res_tbb, rows, cols);
-    end = omp_get_wtime();
-    std::cout << "Time par TBB:" << end - st << std::endl;
+    const clock_t endParTime = clock();
+    const float parTime = static_cast<float>(endParTime - startTimeParallel) / CLOCKS_PER_SEC;
+    std::cout << "Time par TBB:" << parTime << std::endl;
 
     for (int i = 0; i < rows; i++) {
         delete[] picture[i];
