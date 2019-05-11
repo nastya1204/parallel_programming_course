@@ -55,10 +55,8 @@ void par_mat(double kernel[3][3], int **picture1, int **picture2, int j, size_t 
 }
 
 void parallel_matrix_multiply(double kernel[3][3], int **picture1, int **picture2, size_t size_rows, size_t size_cols) {
-    tbb::parallel_for(tbb::blocked_range<size_t>(0, size_cols), [=](const tbb::blocked_range<size_t>& r)
-    {
-        for (size_t j = r.begin(); j != r.end(); ++j)
-        {
+    tbb::parallel_for(tbb::blocked_range<size_t>(0, size_cols), [=](const tbb::blocked_range<size_t>& r) {
+        for (size_t j = r.begin(); j != r.end(); ++j) {
             par_mat(kernel, picture1, picture2, j, size_rows, size_cols);
         }
     });
@@ -98,3 +96,4 @@ int main() {
 
     return 0;
 }
+
