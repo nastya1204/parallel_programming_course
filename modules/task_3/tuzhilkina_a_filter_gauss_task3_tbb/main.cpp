@@ -85,7 +85,7 @@ int main() {
     tbb::task_scheduler_init init(4);
     parallel_matrix_multiply(kernel, picture, res_tbb, rows, cols);
     tbb::tick_count t1 = tick_count::now(); 
-    std::cout << "Time par TBB:" << (t1 - t0).seconds() << std::endl;
+    std::cout << "Time par TBB: " << (t1 - t0).seconds() << std::endl;
 
     for (int i = 0; i < rows; i++) {
         delete[] picture[i];
