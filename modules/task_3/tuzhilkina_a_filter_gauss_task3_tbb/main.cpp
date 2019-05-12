@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
-#include <tbb/tbb.h>
+#include "tbb/tbb.h"
 #include "tbb/parallel_for.h"
 #include "tbb/blocked_range2d.h"
 #include "tbb/task_scheduler_init.h"
