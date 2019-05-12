@@ -65,7 +65,6 @@ void parallel_matrix_multiply(double kernel[3][3], int **picture1, int **picture
 
 int main() {
     int rows, cols;
-    double parTime;
     double kernel[3][3];
 
     rows = 5000, cols = 5000;
