@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
-#include "tbb/tbb.h"
 #include "tbb/parallel_for.h"
 #include "tbb/blocked_range2d.h"
 #include "tbb/task_scheduler_init.h"
@@ -81,11 +80,11 @@ int main() {
     InitMatr(rows, cols, picture);
     InitKern(kernel, 1, 1.0);
 
-    startTimeParallel = tbb::tick_count::now();
+    const clock_t startTimeParallel = clock();
     tbb::task_scheduler_init init(4);
     parallel_matrix_multiply(kernel, picture, res_tbb, rows, cols);
-    endParTime = tbb::tick_count::now();
-    parTime = (endParTime - startTimeParallel).seconds();
+    const clock_t endParTime = clock();
+    const float parTime = static_cast<float>(endParTime - startTimeParallel) / CLOCKS_PER_SEC;
     std::cout << "Time par TBB:" << parTime << std::endl;
 
     for (int i = 0; i < rows; i++) {
