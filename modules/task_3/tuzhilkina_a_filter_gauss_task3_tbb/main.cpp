@@ -4,9 +4,11 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
-#include "tbb/parallel_for.h"
-#include "tbb/blocked_range2d.h"
-#include "tbb/task_scheduler_init.h"
+
+#include <tbb/tbb.h>
+#include <tbb/task_scheduler_init.h>
+#include <tbb/parallel_for.h>
+#include <tbb/blocked_range.h>
 
 void InitMatr(int rows, int cols, int** m) {
     for (int i = 0; i < rows; i++)
@@ -63,7 +65,6 @@ void parallel_matrix_multiply(double kernel[3][3], int **picture1, int **picture
 
 int main() {
     int rows, cols;
-    tbb::tick_count startTimeParallel, endParTime;
     double parTime;
     double kernel[3][3];
 
@@ -80,12 +81,11 @@ int main() {
     InitMatr(rows, cols, picture);
     InitKern(kernel, 1, 1.0);
 
-    const clock_t startTimeParallel = clock();
+    tbb::tick_count t0 = tick_count::now(); 
     tbb::task_scheduler_init init(4);
     parallel_matrix_multiply(kernel, picture, res_tbb, rows, cols);
-    const clock_t endParTime = clock();
-    const float parTime = static_cast<float>(endParTime - startTimeParallel) / CLOCKS_PER_SEC;
-    std::cout << "Time par TBB:" << parTime << std::endl;
+    tbb::tick_count t1 = tick_count::now(); 
+    std::cout << "Time par TBB:" << (t1 - t0).seconds() << std::endl;
 
     for (int i = 0; i < rows; i++) {
         delete[] picture[i];
