@@ -81,10 +81,10 @@ int main() {
     InitMatr(rows, cols, picture);
     InitKern(kernel, 1, 1.0);
 
-    tbb::tick_count t0 = tick_count::now();
+    tbb::tick_count t0 = tbb::tick_count::now();
     tbb::task_scheduler_init init(4);
     parallel_matrix_multiply(kernel, picture, res_tbb, rows, cols);
-    tbb::tick_count t1 = tick_count::now();
+    tbb::tick_count t1 = tbb::tick_count::now();
     std::cout << "Time par TBB: " << (t1 - t0).seconds() << std::endl;
 
     for (int i = 0; i < rows; i++) {
